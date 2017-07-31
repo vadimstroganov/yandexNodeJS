@@ -126,7 +126,7 @@ myForm.addEventListener('submit', function (e) {
 
 // функции для валидации полей формы
 function validateFio(value) {
-    let numberOfWords = value.split(' ').length;
+    let numberOfWords = value.trim().split(' ').length;
     return numberOfWords === 3;
 }
 

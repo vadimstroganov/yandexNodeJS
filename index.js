@@ -81,12 +81,9 @@ function validateEmail(value) {
 }
 
 function validatePhone(value) {
-    let regex = /^\+7[(]([0-9]){3}[)]([0-9]){3}-([0-9]){2}-([0-9]){2}$/;
     const maxSumOfNumbers = 30;
-
-    let sumOfNumbers = value.replace(/[^0-9]/g,'').split('').reduce(function (sum, value) {
-        return parseInt(sum) + parseInt(value);
-    });
+    let regex = /^\+7[(]([0-9]){3}[)]([0-9]){3}-([0-9]){2}-([0-9]){2}$/;
+    let sumOfNumbers = value.replace(/[^0-9]/g,'').split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
 
     return regex.test(value) && sumOfNumbers <= maxSumOfNumbers;
 }

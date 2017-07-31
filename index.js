@@ -2,7 +2,7 @@ let myForm = document.getElementById('myForm');
 let resultContainer = document.getElementById('resultContainer');
 
 myForm.validate = function () {
-    let inputs = this.getData();
+    let inputs = document.getElementsByTagName('input');
     let errors = [];
     let isValid = true;
 
@@ -44,7 +44,7 @@ myForm.getData = function () {
     let object = {};
 
     for (let input of inputs) {
-        object[input.name] = input;
+        object[input.name] = input.value;
     }
 
     return object;

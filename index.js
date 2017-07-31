@@ -50,7 +50,14 @@ myForm.getData = function () {
 };
 
 myForm.setData = function (object) {
+    const allowedElementNames = ['fio', 'email', 'phone'];
 
+    for (let elName in object) {
+        if (allowedElementNames.includes(elName)) {
+            let el = document.getElementsByName(elName)[0];
+            el.value = object[elName];
+        }
+    }
 };
 
 myForm.submit = function () {

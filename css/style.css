@@ -24,3 +24,8 @@ input.error {
 #resultContainer.progress {
     background: #5bc0de;
 }
+
+#submitButton:disabled {
+    background: gray;
+    cursor: not-allowed;
+}

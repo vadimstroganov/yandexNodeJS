@@ -113,6 +113,7 @@ myForm.submit = function () {
     let validateResult = this.validate();
 
     if (validateResult.isValid) {
+        document.getElementById("submitButton").disabled = true;
         processRequest(this.method, this.action);
     }
 };

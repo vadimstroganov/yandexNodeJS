@@ -66,7 +66,7 @@ myForm.submit = function () {
         });
     }
 
-    function sendRequest(requestMethod, requestAction) {
+    function processRequest(requestMethod, requestAction) {
         sendXhr(requestMethod, requestAction).then(function (results) {
             let result = JSON.parse(results);
 
@@ -86,7 +86,7 @@ myForm.submit = function () {
                     resultContainer.classList.add('progress');
 
                     setTimeout(function () {
-                        sendRequest(requestMethod, requestAction);
+                        processRequest(requestMethod, requestAction);
                     }, result.timeout);
 
                     break;
@@ -97,7 +97,7 @@ myForm.submit = function () {
     let validateResult = this.validate();
 
     if (validateResult.isValid) {
-        sendRequest(this.method, this.action);
+        processRequest(this.method, this.action);
     }
 };
 

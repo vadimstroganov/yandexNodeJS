@@ -27,6 +27,8 @@ myForm.validate = function () {
                 continue;
         }
 
+        elementSetError(input, validateResult);
+
         if (!validateResult) {
             isValid = false;
             errors.push(inputName);
@@ -86,4 +88,13 @@ function validatePhone(value) {
     let sumOfNumbers = value.replace(/[^0-9]/g,'').split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
 
     return regex.test(value) && sumOfNumbers <= maxSumOfNumbers;
+}
+
+// функция для управления классом ошибки поля
+function elementSetError(element, bool) {
+    if (bool) {
+        element.classList.remove('error');
+    } else {
+        element.classList.add('error');
+    }
 }

@@ -1,4 +1,5 @@
 let myForm = document.getElementById('myForm');
+let resultContainer = document.getElementById('resultContainer');
 
 myForm.validate = function () {
     let inputs = this.getData();
@@ -54,18 +55,56 @@ myForm.setData = function (object) {
 };
 
 myForm.submit = function () {
+    function sendXhr(requestMethod, requestAction) {
+        return new Promise(function (resolve, reject) {
+            let xhr = new XMLHttpRequest();
+            xhr.open(requestMethod, requestAction);
+            xhr.send();
+            xhr.addEventListener('load', function () {
+                resolve(xhr.response);
+            });
+        });
+    }
 
+    function sendRequest(requestMethod, requestAction) {
+        sendXhr(requestMethod, requestAction).then(function (results) {
+            let result = JSON.parse(results);
+
+            switch(result.status) {
+                case 'success':
+                    resultContainer.classList.remove();
+                    resultContainer.classList.add('success');
+                    resultContainer.textContent = 'Success';
+                    break;
+                case 'error':
+                    resultContainer.classList.remove();
+                    resultContainer.classList.add('error');
+                    resultContainer.textContent = result.reason;
+                    break;
+                default:
+                    resultContainer.classList.remove();
+                    resultContainer.classList.add('progress');
+
+                    setTimeout(function () {
+                        sendRequest(requestMethod, requestAction);
+                    }, result.timeout);
+
+                    break;
+            }
+        })
+    }
+
+    let validateResult = this.validate();
+
+    if (validateResult.isValid) {
+        sendRequest(this.method, this.action);
+    }
 };
 
 // кастомный обработчик формы
 myForm.addEventListener('submit', function (e) {
-    let validateResult = this.validate();
-    if (validateResult.isValid) {
-        // code
-    } else {
-        e.preventDefault();
-        // code
-    }
+    e.preventDefault();
+    this.submit();
 });
 
 // функции для валидации полей формы

@@ -1,0 +1,26 @@
+body {
+    margin: 10px;
+}
+
+input.error {
+    border: 1px solid red;
+}
+
+#resultContainer.success, #resultContainer.error, #resultContainer.progress {
+    margin: 0 0 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+#resultContainer.success {
+    background: #5cb85c;
+}
+
+#resultContainer.error {
+    background: #d9534f;
+}
+
+#resultContainer.progress {
+    background: #5bc0de;
+}

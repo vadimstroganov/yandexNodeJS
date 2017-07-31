@@ -6,8 +6,7 @@ myForm.validate = function () {
     let errors = [];
     let isValid = true;
 
-    for (let inputName in inputs) {
-        let input = inputs[inputName];
+    for (let input of inputs) {
         let validateResult;
 
         if (!input.hasAttribute('data-validate-type')) {
@@ -32,7 +31,7 @@ myForm.validate = function () {
 
         if (!validateResult) {
             isValid = false;
-            errors.push(inputName);
+            errors.push(input.name);
         }
     }
 
@@ -59,10 +58,16 @@ myForm.submit = function () {
         return new Promise(function (resolve, reject) {
             let xhr = new XMLHttpRequest();
             xhr.open(requestMethod, requestAction);
+
+            xhr.onload = function () {
+                xhr.status === 200 ? resolve(xhr.response) : reject();
+            };
+
+            xhr.onerror = function () {
+                reject(new Error("Error"));
+            };
+
             xhr.send();
-            xhr.addEventListener('load', function () {
-                resolve(xhr.response);
-            });
         });
     }
 
@@ -91,6 +96,10 @@ myForm.submit = function () {
 
                     break;
             }
+        }).catch(function (e) {
+            resultContainer.classList.remove();
+            resultContainer.classList.add('error');
+            resultContainer.textContent = e;
         })
     }
 
